@@ -8,7 +8,7 @@ import (
 	"gorgonia.org/tensor"
 )
 
-func setupAndTrainNetwork(data []string) error {
+func setupAndTrainNetwork(_ []string) error {
 	g := gorgonia.NewGraph()
 
 	// Create input layer (assuming input size of 100 for this example)
@@ -72,7 +72,7 @@ func setupAndTrainNetwork(data []string) error {
 		gorgonia.WithShape(1, 100),
 		gorgonia.WithName("y"),
 	)
-	cost := gorgonia.Must(gorgonia.Mean(gorgonia.Must(gorgonia.Square(gorgonia.Must(gorgonia.Sub(output, y))))))
+	gorgonia.Must(gorgonia.Mean(gorgonia.Must(gorgonia.Square(gorgonia.Must(gorgonia.Sub(output, y))))))
 
 	// Create VM and Solver
 	vm := gorgonia.NewTapeMachine(g)
@@ -83,7 +83,7 @@ func setupAndTrainNetwork(data []string) error {
 		if err = vm.RunAll(); err != nil {
 			log.Fatalf("Failed at iteration %d: %v", i, err)
 		}
-		solver.Step(gorgonia.NodesToValueGrads([]gorgonia.Node{w1, b1, w2, b2}))
+		solver.Step(gorgonia.NodesToValueGrads(gorgonia.Nodes{w1, b1, w2, b2}))
 		vm.Reset()
 	}
 
