@@ -9,6 +9,21 @@ import (
 func main() {
 	fmt.Println("Starting Personal AI Model Project")
 
+	// Initialize Enhanced Belief System Processor
+	beliefProcessor := NewBeliefSystemProcessor("./beliefs", "./personal_data/journals")
+
+	// Update beliefs from journals
+	err := beliefProcessor.UpdateBeliefsFromJournals()
+	if err != nil {
+		log.Printf("Error updating beliefs from journals: %v", err)
+	}
+
+	// Save updated beliefs
+	err = beliefProcessor.SaveBeliefs()
+	if err != nil {
+		log.Printf("Error saving updated beliefs: %v", err)
+	}
+
 	// Collect data
 	data, err := collectTextData("./personal_data")
 	if err != nil {
@@ -38,8 +53,10 @@ func main() {
 	processedData := make([]string, len(cm.Contents))
 	for i, content := range cm.Contents {
 		processedData[i] = preprocessText(content.Text)
+		// Apply belief system processing
+		processedData[i] = beliefProcessor.ProcessResponse(content.Text, processedData[i])
 	}
-	fmt.Println("Data preprocessing completed")
+	fmt.Println("Data preprocessing and belief system processing completed")
 
 	// Set up and train neural network
 	err = setupAndTrainNetwork(processedData)
@@ -48,4 +65,15 @@ func main() {
 	}
 
 	fmt.Println("Project steps completed. Neural network is ready for use.")
+
+	// Example of using the trained model with belief system
+	exampleInput := "How can we promote ethical conduct in AI development?"
+	response := generateResponse(exampleInput) // This function needs to be implemented
+	processedResponse := beliefProcessor.ProcessResponse(exampleInput, response)
+	fmt.Printf("Input: %s\nResponse: %s\n", exampleInput, processedResponse)
+}
+
+func generateResponse(input string) string {
+	// This is a placeholder. In a real implementation, this would use the trained neural network to generate a response.
+	return "We should consider the long-term implications and prioritize transparency in AI development."
 }
