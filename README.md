@@ -13,11 +13,16 @@ The goal of this project is to build an AI model that can mimic your writing sty
 5. Evaluation and Improvement: Testing the model's performance and iteratively improving it.
 
 ## Files
+personal-ai-model/
+├── README.md
+├── main.go
+├── data_collection.go
+├── data_preprocessing.go
+├── neural_network.go
+├── content_manager.go
+└── personal_data/
+    ├── journals/
 
-- `main.go`: The main entry point of the application.
-- `data_collection.go`: Contains functions for collecting text data from files.
-- `data_preprocessing.go`: Includes text preprocessing functions.
-- `neural_network.go`: Sets up a basic neural network using the Gorgonia library.
 
 ## Usage
 
