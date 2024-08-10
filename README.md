@@ -13,6 +13,8 @@ The goal of this project is to build an AI model that can mimic your writing sty
 5. Evaluation and Improvement: Testing the model's performance and iteratively improving it.
 
 ## Files
+
+```bash
 personal-ai-model/
 ├── README.md
 ├── main.go
@@ -33,6 +35,8 @@ personal-ai-model/
     └── references/
         ├── 2023-07-20_favorite_book_quotes.txt
         └── 2023-08-02_inspiring_articles.txt
+```
+
 ## Usage
 
 1. Place your personal text data in the `personal_data/` directory.
