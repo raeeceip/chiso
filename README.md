@@ -22,8 +22,17 @@ personal-ai-model/
 ├── content_manager.go
 └── personal_data/
     ├── journals/
-
-
+    │   ├── 2023-08-10_daily_thoughts.txt
+    │   └── 2023-08-11_reflections.txt
+    ├── blog_posts/
+    │   ├── 2023-07-15_ai_ethics.txt
+    │   └── 2023-08-01_personal_growth.txt
+    ├── social_media/
+    │   ├── 2023-08-05_twitter_thread.txt
+    │   └── 2023-08-09_linkedin_post.txt
+    └── references/
+        ├── 2023-07-20_favorite_book_quotes.txt
+        └── 2023-08-02_inspiring_articles.txt
 ## Usage
 
 1. Place your personal text data in the `personal_data/` directory.
