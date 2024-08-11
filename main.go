@@ -50,12 +50,7 @@ func main() {
 	cm.SortByDate() // Sort all content by date
 
 	// Preprocess data
-	processedData := make([]string, len(cm.Contents))
-	for i, content := range cm.Contents {
-		processedData[i] = preprocessText(content.Text)
-		// Apply belief system processing
-		processedData[i] = beliefProcessor.ProcessResponse(content.Text, processedData[i])
-	}
+	processedData := preprocessAllData(cm.Contents, beliefProcessor)
 	fmt.Println("Data preprocessing and belief system processing completed")
 
 	// Set up and train neural network
@@ -64,16 +59,41 @@ func main() {
 		log.Fatalf("Error in neural network setup and training: %v", err)
 	}
 
-	fmt.Println("Project steps completed. Neural network is ready for use.")
+	fmt.Println("Neural network training completed")
 
 	// Example of using the trained model with belief system
 	exampleInput := "How can we promote ethical conduct in AI development?"
-	response := generateResponse(exampleInput) // This function needs to be implemented
+	response := generateResponseFromNetwork(exampleInput)
 	processedResponse := beliefProcessor.ProcessResponse(exampleInput, response)
 	fmt.Printf("Input: %s\nResponse: %s\n", exampleInput, processedResponse)
+
+	// Start the interactive loop
+	interactiveLoop(beliefProcessor)
 }
 
-func generateResponse(input string) string {
-	// This is a placeholder. In a real implementation, this would use the trained neural network to generate a response.
-	return "We should consider the long-term implications and prioritize transparency in AI development."
+func preprocessAllData(contents []Content, bsp *BeliefSystemProcessor) []string {
+	processedData := make([]string, len(contents))
+	for i, content := range contents {
+		preprocessed := preprocessText(content.Text)
+		processedData[i] = bsp.ProcessResponse(content.Text, preprocessed)
+	}
+	return processedData
+}
+
+func interactiveLoop(bsp *BeliefSystemProcessor) {
+	fmt.Println("Enter your questions (type 'exit' to quit):")
+	for {
+		var input string
+		fmt.Print("> ")
+		fmt.Scanln(&input)
+
+		if input == "exit" {
+			break
+		}
+
+		response := generateResponseFromNetwork(input)
+		processedResponse := bsp.ProcessResponse(input, response)
+		fmt.Printf("AI: %s\n", processedResponse)
+	}
+	fmt.Println("Goodbye!")
 }
